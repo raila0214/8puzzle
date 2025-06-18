@@ -4,7 +4,7 @@ import { Button, Stack } from '@mui/material';
 
 function App() {
   const [X,setX] = useState([1,2,3,4,5,6,7,8,0]);
-  const [moving, setMoving] = useState(null);
+  const [moving, setMoving] = useState<{idx:number,dx:number,dy:number} |null>(null);
 
   function shuffle(){
     let arr;
@@ -36,7 +36,7 @@ function App() {
     setTimeout(()=>{console.log("F")}, 3000);
   }
 
-  function click(i){
+  function click(i:number){
     const newX = X.slice();
     console.log("clicked", north(i), south(i), east(i), west(i));
     if (newX[north(i)]==0){
@@ -63,11 +63,11 @@ function App() {
     setTimeout(()=>{setMoving(null)}, 200);
   }
 
-  function idx2pos(i){
+  function idx2pos(i:number){
     return {c:i%3, r:Math.floor(i/3)};
   }
 
-  function north(i){
+  function north(i:number){
     const pos = idx2pos(i);
     if (pos.r <= 0){
       return -1;
@@ -75,7 +75,7 @@ function App() {
     return 3*(pos.r-1)+pos.c;
   }
 
-  function south(i){
+  function south(i:number){
     const pos = idx2pos(i);
     if (pos.r >= 2){
       return -1;
@@ -83,7 +83,7 @@ function App() {
     return 3*(pos.r+1)+pos.c;
   }
   
-  function west(i){
+  function west(i:number){
     const pos = idx2pos(i);
     if (pos.c <= 0){
       return -1;
@@ -91,7 +91,7 @@ function App() {
     return 3*pos.r+(pos.c-1);
   }
 
-  function east(i){
+  function east(i:number){
     const pos = idx2pos(i);
     if (pos.c >= 2){
       return -1;
@@ -117,7 +117,7 @@ function App() {
     }
   }
 
-  function Piece({i}){
+  function Piece({i}:{i:number}){
 
     const text = (X[i]==0)?"":X[i]
     const color = (X[i]==0)?"none":"palegreen"
